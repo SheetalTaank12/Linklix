@@ -1,20 +1,10 @@
 import { Router } from "express";
 import { activeCheck, commentPost, createPost, deleteComment, deletePost, getAllPosts, getCommentsByPost, increment_likes } from "../controllers/posts.controller.js";
-import multer from "multer";
+import upload from "../middlewares/upload.js";
 
 
 const router = Router();
 
-const storage = multer.diskStorage({
-    destination: (req,file,cb)=>{
-        cb(null,'uploads/')
-    },
-    filename: (req,file,cb)=>{
-        cb(null,file.originalname)
-    }
-});
-
-const upload = multer({ storage: storage });
 router.route('/').get(activeCheck);
 
 router.route('/create_post').post(upload.single('media'),createPost);
