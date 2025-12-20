@@ -51,7 +51,11 @@ export const getAllPosts= async(req,res)=>{
 export const deletePost = async(req,res)=>{
     const {token, post_id} = req.body;
     try{
+// Find user by token and fetch only the user's _id
+// We only need _id, so other fields are excluded for security and efficiency
         const user = await User.findOne({token: token}).select("_id");
+
+
         if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -62,6 +66,7 @@ export const deletePost = async(req,res)=>{
         return res.status(404).json({message: "Post not found"});
     }
 
+    //check whether the user is trying to delete his own post or someone else's
     if(post.userId.toString()!== user._id.toString){
         return res.status(401).json({message: "Unauthorized"});
     }
@@ -93,7 +98,7 @@ export const commentPost = async(req,res)=>{
 
        const comment = new Comment({
         userId: user._id,
-        postId: post_id,
+        postId: post_id,  // we can also write postId: post._id, it is even better as it is saved in db , but both post_id and post._id contain same value so either can be used
         comment: commentBody
 
        });
