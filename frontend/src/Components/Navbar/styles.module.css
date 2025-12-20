@@ -1,0 +1,31 @@
+.container{
+    padding: 1.2rem;
+}
+
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3.2rem;
+}
+
+.navBarOptionContainer{
+    display: flex;
+}
+
+.joinBtn{
+    background: white;
+    border-radius: 10px;
+    padding-block: 0.6rem;
+    padding-inline: 1.2rem;
+    color: #7c00e8;
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1.5px solid #7c00e8;
+}
+
+.joinBtn:hover{
+    color: white;
+    background-color: #7c00e8;
+}
