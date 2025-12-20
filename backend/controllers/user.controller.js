@@ -8,7 +8,7 @@ import PDFdocument from 'pdfkit';
 import fs from 'fs';
 
 import Post from "../models/posts.model.js";
-import { userInfo } from "os";
+
 
 const convertUserDataToPDF= async(userData)=>{
     const doc = new PDFdocument();
@@ -47,18 +47,36 @@ const convertUserDataToPDF= async(userData)=>{
 //register on linklix
 export const register = async(req,res)=>{
     try{
-
+     //Works because: req.body has keys called name, email, password, username
         const {name,email,password,username}= req.body;
+
+
+//         If you want different variable names, you must map them:
+// const { name: Name, email: Email, password: pass, username: usrname} = req.body;
 
         if(!name|| !email || !password || !username){
             return res.status(400).json({message: "All files are required"});
         }
+
+
+// and how do we know what is inside req.body -> the values will come from frontend !
+
+//  But When you design backend first, YOU decide what goes inside req.body.
+// req.body is not magical. It doesn’t come with predefined keys.
+// Think of backend-first like this. You are writing rules, not guessing data. 
+// You are basically saying:“If anyone wants to register a user, they MUST send me these fields.”
+
+
 
         const user = await User.findOne({
             email
         });
 
         if(user) return res.status(400).json({message: "User already exists!"});
+
+        // Converts the plain password into a secure hashed version using bcrypt.
+// "10" defines the strength (number of hashing rounds).
+// The hash includes a random salt, so the original password cannot be recovered.
 
         const hashedPassword = await bcrypt.hash(password,10);
 
@@ -85,7 +103,7 @@ export const register = async(req,res)=>{
 
 
 
-//login to worklynk
+//login to linklix
 export const login= async(req,res)=>{
     try{
         const {email,password}= req.body;
@@ -101,24 +119,48 @@ export const login= async(req,res)=>{
             return res.status(404).json({message: "User does not exist"});
         }
 
+// Compares the entered password with the stored hashed password.
+// bcrypt uses the same salt and rounds from the stored hash to verify the password.
 
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch) return res.status(400).json({message: "Invalid Credentials"});
 
+
+// Generate a secure random token and convert it to a readable hex string with .toString
+//It creates a long, random, hard-to-guess string called a token.
+//This token is: Unique, Random, Secure, Almost impossible to guess      
+
         const token =crypto.randomBytes(32).toString("hex");
 
+
+
         await User.updateOne({_id : user._id},{ token });
+// When you do: await User.updateOne({ _id: user._id }, { token });
+// JS interprets this shorthand as: { token: token }
+// Left-hand side (token) → schema field name
+// Right-hand side (token) → JS variable storing the crypto value
+
+
+// We use $set in updateOne function in raw MongoDB not in mongoose code
+// Mongoose automatically wraps the fields in $set
+// Raw MongoDB: db.collection.updateOne(filter, update)
+// Mongoose: Model.updateOne(filter, update)
+
+
+
         return res.json({ token: token });
     } catch(err){
+        return res.status(500).json({message:err.message});
 
     }
 }
 
 
 
-//almost all controllers ahead use token to check whether a user exists already in db
-//so we will convert this repeated task into middleware 
+//almost all controllers ahead use token to check whether a user is logged in becoz tokens are used for
+// login session
+//so we will convert this repeated task into middleware later
 
 
 //upload profile picture 
@@ -132,6 +174,23 @@ export const uploadProfilePicture= async(req,res)=>{
         if(!user){
             return res.status(404).json({message: "User not found"});
         }
+
+
+// req.file.filename is set by Multer (customizable)
+//When a file is uploaded, Multer creates a req.file object (for single file) or req.files (for multiple files).
+
+//sample req.file looks like 
+// req.file = {
+//   fieldname: 'profilePicture',     // The name attribute in HTML form
+//   originalname: 'myphoto.jpg',     // Original file name uploaded by user
+//   encoding: '7bit',
+//   mimetype: 'image/jpeg',
+//   destination: 'uploads/',          // Folder where Multer saved the file
+//   filename: '1699999999999-myphoto.jpg',  // Generated file name (this is what Multer set)
+//   path: 'uploads/1699999999999-myphoto.jpg',
+//   size: 34567
+// }
+
 
         user.profilePicture= req.file.filename;
         await user.save();
@@ -149,11 +208,10 @@ export const uploadProfilePicture= async(req,res)=>{
 export const updateUserProfile= async(req,res)=>{
     try{
 
+        //It takes token out of req.body and puts everything else into newUserData.
         const {token, ...newUserData}= req.body;
 
         const user = await User.findOne({token: token});
-
-        //the user who is trying to update exists or not in database
 
         if(!user){
             return res.status(404).json({message:"User not found"});
@@ -161,7 +219,7 @@ export const updateUserProfile= async(req,res)=>{
         }
         
 
-        //if the user is in database, then we extract the new username and email which he wants to set in place of old info, from the req parameter
+        //if the user is logged in, then we extract the new username and email which he wants to set in place of old info, from the req parameter
         const {username, email}= newUserData;
 
         // then we find if the new values of username and email already exist in database, which the current user is willing to set as his own
@@ -204,8 +262,10 @@ export const getUserAndProfile= async(req,res)=>{
     
     try{
 
-        
+      //  GET request → req.query , POST request → req.body
         const { token } = req.query;
+// we can also write  const token = req.query.token;  but it is not modern method
+
         const user = await User.findOne({token: token});
 
         if(!user){
@@ -236,12 +296,12 @@ export const updateProfileData = async(req,res)=>{
 
         const{token, ...newProfileData}= req.body;
 
-        const userProfile = await User.findOne({token: token});
-        if (!userProfile){
+        const user = await User.findOne({token: token});
+        if (!user){
             return res.status(404).json({message: "User not found"});
         }
 
-        const profile_to_update = await Profile.findOne({userId: userProfile._id});
+        const profile_to_update = await Profile.findOne({userId: user._id});
 
         Object.assign(profile_to_update, newProfileData);
 
