@@ -3,6 +3,6 @@
 
 .env*
 
-uploads/
+
 
 api.http
