@@ -2,7 +2,7 @@ import Post from "../models/posts.model.js";
 import Profile from "../models/profile.model.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-
+import Comment from "../models/comments.model.js";
 export const activeCheck = async(req,res) =>{
 
     return res.status(200).json({message:"RUNNING"});
@@ -20,7 +20,7 @@ export const createPost= async(req,res)=>{
         userId: user._id,
         body: req.body.body,
         media: req.file != undefined ? req.file.filename : "",
-        fileType: req.file != undefined ? req.file.mimetype.split("/"):""
+        fileType: req.file ? req.file.mimetype.split("/")[1] : ""
 
     });
 
@@ -67,7 +67,7 @@ export const deletePost = async(req,res)=>{
     }
 
     //check whether the user is trying to delete his own post or someone else's
-    if(post.userId.toString()!== user._id.toString){
+    if(post.userId.toString()!== user._id.toString()){
         return res.status(401).json({message: "Unauthorized"});
     }
 
@@ -99,7 +99,7 @@ export const commentPost = async(req,res)=>{
        const comment = new Comment({
         userId: user._id,
         postId: post_id,  // we can also write postId: post._id, it is even better as it is saved in db , but both post_id and post._id contain same value so either can be used
-        comment: commentBody
+        body: commentBody
 
        });
 
@@ -115,13 +115,15 @@ export const commentPost = async(req,res)=>{
 
 
 export const getCommentsByPost= async(req,res)=>{
-    const {post_id} = req.body;
+    const {post_id} = req.query;
     try{
      const post = await Post.findOne({_id: post_id});
      if(!post){
         return res.status(404).json({message: "Post not found"});
      }
-    return res.json({comments: post.comments});
+    const comments = await Comment.find({ postId: post_id }).populate('userId','name username email profilePicture');
+    return res.json({ comments });
+
 
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -157,24 +159,41 @@ export const deleteComment= async(req,res)=>{
 
 
 
-export const increment_likes= async(req,res)=>{
+export const toggleLikePost = async (req, res) => {
+  const { token, postId } = req.body;
 
-
-    const {post_id}= req.body;
-    try{
-    const post = await Post.findOne({_id: post_id});
-     if(!post){
-        return res.status(404).json({message: "Post not found"});
-     }
-
-     post.likes = post.likes + 1;
-
-     await post.save();
-
-     return res.json({message:"Likes incremented"});
-
-
-    }catch(err){
-        return res.status(500).json({message:err.message});
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const userId = user._id.toString();
+
+    // Check if already liked
+    if (post.likes.includes(userId)) {
+      // Unlike
+      post.likes = post.likes.filter(
+        id => id.toString() !== userId
+      );
+    } else {
+      // Like
+      post.likes.push(user._id);
+    }
+
+    await post.save();
+
+    return res.json({
+      message: "Like status updated",
+      likes: post.likes.length
+    });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};

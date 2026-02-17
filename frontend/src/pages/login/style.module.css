@@ -30,8 +30,21 @@
     background-color: #7c00e8;
     color: white;
     flex-direction: column;
-    gap: 1.2rem;
+    
     padding-inline: 1.2rem;
+}
+.cardContainer_right div{
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    align-items: center;
+    justify-content: center;
+}
+.cardContainer_right .signUpBtn{
+    background-color: white;
+}
+.cardContainer_right .signUpBtn:hover{
+    background-color: black;
 }
 
 .cardLeft_heading{
@@ -80,4 +93,38 @@
 .signUpBtn:hover{
     color: white;
     background-color: black;
+}
+
+@media screen and (max-width:600px) {
+    .cardContainer{
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .cardContainer_left,.cardContainer_right{
+        flex: unset;
+    }
+    .cardContainer_right{
+        height: 100%;
+        width: 100%;
+    }
+    
+.cardLeft_heading{
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.cardContainer_left{
+    padding-inline: 0;
+    width: 90%;
+}
+.inputField{
+    padding-inline: 1rem;
+   
+    width: 100%;
+}
+
+.inputContainer{
+    gap: 1rem;
+}
 }

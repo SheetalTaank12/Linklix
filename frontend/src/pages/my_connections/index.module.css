@@ -1,0 +1,114 @@
+.container {
+  
+  border-top: 0.1rem solid #e5e5e5;
+    border-bottom: 0.1rem solid #e5e5e5;
+}
+
+.list {
+  margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.connectionCard {
+  
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+.card:hover {
+  background-color: #fafafa;
+}
+
+.card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.9rem;
+  border-top: 0.1rem solid #e5e5e5;
+ 
+}
+
+
+.name {
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+}
+.noConnections {
+  text-align: center;
+  margin-top: 2.4rem;
+  color: #777;
+}
+
+.profilePic {
+  width: 4.1rem;
+  height: 4.1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.connectionInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100% !important;
+    
+}
+
+.removeButton svg{
+    height: 1.2rem;
+    width: 1.2rem;
+}
+
+.removeButton{
+    padding: 0.5rem 0.5rem;
+    background-color: #777;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+
+@media screen and (max-width:600px){
+   .container{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    
+   }
+   .profilePic{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+   }
+   .list{
+    width: 100%;
+    margin-top: 0;
+   }
+
+   .container h1{
+    font-size: 1rem;
+   }
+   .removeButton{
+    padding: 0.3rem 0.4rem;
+   }
+   .removeButton svg{
+    display: none;
+   }
+}

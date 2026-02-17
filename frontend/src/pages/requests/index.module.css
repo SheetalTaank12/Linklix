@@ -1,0 +1,168 @@
+.top{
+    display: flex;
+    justify-content: space-around;
+   }
+
+.top div{
+  width: 50%;
+  text-align: center;
+  border-bottom: 2.4px solid transparent;
+  background-color: #eee;
+  padding: 0.4rem;
+  cursor: pointer;
+  
+}
+.requestContainer{
+    display: flex;
+    flex-direction: column;
+     width: 100%;
+    border-top: 0.1px solid #e5e5e5;
+     border-bottom: 0.1px solid #e5e5e5;
+}
+
+
+.list {
+   margin-top: 0;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.connectionCard {
+  
+  width: 100% !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+}
+
+
+.card:hover {
+  background-color: #fafafa;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-bottom: none;
+ 
+  cursor: pointer;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+}
+.noConnections {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+}
+
+.profilePic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.connectionInfo{
+   display: flex;
+    
+    justify-content: space-between;
+    width: 100% !important;
+    align-items: center;
+}
+ 
+
+.removeBtn svg{
+  color: red;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+
+
+.acceptButton {
+ 
+  color: white;
+  border: none;
+  
+ 
+  font-size: 0.3rem;
+  font-weight: 500;
+  height: 1.7rem !important;
+  width: 1.7rem !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  gap: 0.3rem;
+}
+
+
+.acceptButton svg:hover {
+  background-color: #5800a5 !important;
+  border-radius: 6px;
+}
+
+.acceptButton:active {
+  transform: scale(0.97);
+}
+
+.acceptButton svg{
+    background-color: #7c00e8 !important;
+    color: #fff !important;
+    border-radius: 6px;
+    padding: 0.2rem 0.2rem;
+    margin: 0 !important;
+}
+.denyButton{
+   
+  color: white;
+  
+  
+  font-size: 0.3rem;
+  font-weight: 500;
+  height: 1.7rem !important;
+  width: 1.7rem !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  gap: 0.3rem;
+}
+.denyButton svg {
+  background-color: #fff !important;
+    color: red !important;
+    border: 2px solid red;
+    border-radius: 6px;
+    padding: 0.2rem 0.2rem;
+    margin: 0 !important;
+}
+
+.denyButton svg:hover {
+  background-color: red !important;
+    color: #fff !important;
+    
+}
+
+@media screen and (max-width:600) {
+  
+  .top h3{
+    font-size: 1rem;
+  }
+ 
+  .profilePic{
+    height: 3.3rem;
+    width: 3.3rem;
+  }
+}

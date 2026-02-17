@@ -1,13 +1,24 @@
-import Head from "next/head";
-import Image from "next/image";
+
 
 import styles from "@/styles/Home.module.css";
 import { useRouter } from "next/router";
 import UserLayout from "@/layout/UserLayout";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
 
 export default function Home() {
 
-  const router = useRouter();
+  const authState = useSelector((state)=> state.auth);
+
+    const router = useRouter();
+
+     useEffect(()=>{
+            if(localStorage.getItem("token")){
+                router.push('/dashboard')
+            }
+    
+        },[])
+
   return (
     <UserLayout>
 

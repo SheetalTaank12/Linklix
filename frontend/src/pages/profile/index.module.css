@@ -1,0 +1,483 @@
+.profileContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: rgba(136, 136, 136, 0.1);
+     width:100%;
+}
+
+.backDropContainer{
+    width: 100%;
+    height: 15rem;
+   
+    border-radius: 0.8rem;
+   
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: url("https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg");
+    /* https://t4.ftcdn.net/jpg/06/31/31/59/360_F_631315988_31FMZC4kDYijIJzsxNQivlotI4QGeHow.jpg */
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.backDropContainer img{
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    left: 8%;
+    text-align: center;
+}
+
+.preview{
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    left: 8%;
+    text-align: center;
+}
+
+
+.backDropContainer svg{
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+     border: 1.7px solid white;
+     margin-top: 40%;
+     padding: 0.2rem;
+}
+
+.backDropContainer .overlay{
+     width: 8rem;
+    height: 8rem;
+   background-color: rgba(0,0,0,0);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    left: 8%;
+    text-align: center;
+     opacity: 0;
+
+}
+
+.backDropContainer .overlay:hover{
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    opacity: 1;
+}
+
+.profileDetailsContainer{
+    padding-top: 4.2rem;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+
+}
+
+.userDetailSection{
+    display: flex;
+    flex-direction: row;
+    gap: 25vw;
+    align-items: center;
+    justify-content:space-between;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgb(179,179,179);
+
+}
+
+.profileStats{
+    display: flex;
+   
+    margin-top: 1rem;
+    flex-direction: column;
+    width: 100%;
+    padding-inline: 1rem;
+}
+
+.userStats{
+    display: flex;
+    
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 10vw;
+}
+
+.userStats div{
+    display: flex;
+    gap: 0.2rem;
+    cursor: pointer;
+   
+}
+
+.userStats div svg{
+    width: 1.3em;
+   border: 1px solid black;
+   border-radius: 7px;
+   padding-inline: 0.1rem;
+   background-color: white;
+}
+
+
+.userStats div svg:hover{
+   
+   color: white;
+   background-color: black;
+}
+.connectButton{
+    padding: 0.5rem 1rem;
+    background-color: #7c00e8;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pendingButton{
+    padding: 0.5rem 1rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.connectedButton,.doneButton{
+    padding: 0.5rem 0.6rem; 
+    background-color: white;
+    color: #7c00e8;
+    border: 1px solid #7c00e8;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+
+    transition: all 0.25s ease;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+.connectedButton:hover, .doneButton:hover{
+    background-color: #7c00e8;
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 0, 232, 0.25);
+    transform: translateY(-1px);
+}
+
+.connectedButton:active{
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(124, 0, 232, 0.2);
+}
+
+
+.connectedButton > svg{
+     width: 1.2em;
+   border: none !important;
+   fill: currentColor;
+   background-color: transparent !important;
+   padding-inline: 0.1rem;
+   
+}
+
+.postCard{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.card{
+   display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+}
+
+.postMedia{
+    width: 50%;
+    height: auto;
+    
+    border-radius: 0.5rem;
+   
+}
+
+.workHistoryContainer{
+   display: flex;
+   gap: 1.4rem;
+   padding-top: 1.4rem;
+   width: 100%;
+   flex-wrap: wrap;
+}
+
+.workHistoryCard{
+   min-width: fit-content;
+   padding-inline: 2.5rem;
+   padding-block: 1rem;
+   border-radius: 10px;
+   box-shadow: 10px 10px 15px rgb(173, 173, 173);
+   position: relative;
+}
+
+.uploadBtn{
+  padding: 0.4rem 0.9rem;
+  background-color: #7c00e8;
+  color: white;
+  border-radius: 0.3rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+  position: relative;
+ top: 105%;
+ left: 25%;
+  
+}
+
+
+.editProfileContainer{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.editProfileSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    width: 40vw;
+    height: 80vh;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+    position: relative;
+    
+    border-radius: 10px;
+}
+
+.editProfileSection div{
+    width: 70%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editProfileSection h3{
+    border-bottom: 1px solid #777;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    background-color: #7c00e8;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.editProfileSection input{
+    font-size: 1.1rem;
+    color: #888;
+    width: 60%;
+    padding: 0.5rem;
+}
+
+
+.editProfileSection .doneButton{
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.addBtn svg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.addBtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    width: 10%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border-style: dashed;
+    margin-top: 0.8rem;
+    background-color: white;
+    cursor: pointer;
+}
+.doneButton{
+    gap: 0.5rem;
+}
+.doneButton>svg{
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+
+.userDetailSection_left{
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+    gap: 0.4rem;
+    width: 20vw;
+    padding-left: 3rem;
+}
+
+.workHistoryCard .deleteIcon svg{
+   height: 1.4em;
+    color: #444;
+    cursor: pointer;
+    position: absolute;
+    right: 0.5rem;
+}
+
+
+@media screen and (max-width:600) {
+
+    .profileContainer{
+        width: 100%;
+        padding: 0;
+    }
+    .userDetailSection{
+        gap: 1.1rem;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        padding-left: 1.5rem;
+         padding-top: 0.7rem;
+    }
+    .backDropContainer{
+        border-radius: 0;
+        height: 8rem;
+    }
+    .backDropContainer img , .backDropContainer .overlay{
+        height: 6.5rem;
+        width: 6.5rem;
+        left: 5%;
+    }
+    .profileDetailsContainer{
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+        align-items: flex-start;
+    }
+    .userDetailSection_left{
+        flex-direction: row;
+        width: 100%;
+        padding-left: 0;
+       
+    }
+    
+    .userDetailSection_left h2{
+        font-size: 1.35rem;
+    }
+    
+.userStats{
+    display: flex;
+    
+    margin-top: 1rem;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+}
+.userStats p{
+    font-size: 0.8rem;
+}
+.userStats p::after{
+    content: ".";
+}
+.connectedButton{
+    padding: 0.4rem 0.8rem;
+}
+.acceptButton svg{
+    display: none;
+}
+.profileStats{
+    padding: 0;
+}
+.workHistoryCard{
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 0.1px solid #ccc;
+    padding-inline: 1.5rem;
+}
+.workHistoryContainer{
+    gap: 0;
+    padding-top: 0;
+    
+}
+.profileStats h3{
+    padding-left: 1.5rem;
+} 
+.para{
+    padding-left: 1.5rem;
+
+}
+.connectedButton{
+    padding: 0.3rem 0.5rem;
+}
+
+.addBtn{
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 30%;
+}
+
+.addBtn svg{
+    display: block;
+}
+
+.editProfileContainer{
+    width: 100%;
+}
+.editProfileSection{
+    width: 90%;
+    margin-top: 0;
+    height: 70%;
+    gap: 1.1rem;
+}
+
+.editProfileSection div{
+    font-size: 1rem;
+}
+.editProfileSection input{
+    padding: 0.2rem;
+    font-size: 1rem;
+}
+
+.editProfileSection .doneButton{
+    width: 50%;
+}
+
+}

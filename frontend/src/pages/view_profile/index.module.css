@@ -1,0 +1,308 @@
+.profileContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: rgba(136, 136, 136, 0.1);
+    width:100%;
+}
+
+.backDropContainer{
+    width: 100%;
+    height: 15rem;
+   
+    border-radius: 0.8rem;
+   
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: url("https://images.pexels.com/photos/545521/pexels-photo-545521.jpeg");
+    /* https://images.pexels.com/photos/545521/pexels-photo-545521.jpeg */
+    /* https://t4.ftcdn.net/jpg/06/31/31/59/360_F_631315988_31FMZC4kDYijIJzsxNQivlotI4QGeHow.jpg */
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.backDropContainer img{
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    left: 6%;
+    text-align: center;
+}
+
+.profileDetailsContainer{
+    padding-top: 3.5rem;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+
+}
+
+.userDetailSection{
+    display: flex;
+    flex-direction: row;
+    gap: 25vw;
+    align-items: center;
+    justify-content:space-between;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgb(179,179,179);
+
+}
+
+.profileStats{
+    display: flex;
+   
+    margin-top: 1rem;
+    flex-direction: column;
+    width: 100%;
+    padding-inline: 1.3rem;
+}
+
+.userStats{
+    display: flex;
+    
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 10vw;
+}
+
+.userStats div{
+    display: flex;
+    gap: 0.2rem;
+    cursor: pointer;
+   
+}
+
+.userStats div svg{
+    width: 1.3em;
+   border: 1px solid black;
+   border-radius: 7px;
+   padding-inline: 0.1rem;
+   background-color: white;
+   padding-block: 0 !important;
+}
+
+
+.userStats div svg:hover{
+   
+   color: white;
+   background-color: black;
+}
+.connectButton{
+    padding: 0.5rem 1rem;
+    background-color: #7c00e8;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pendingButton{
+    padding: 0.5rem 1rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+
+.connectedButton{
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: #7c00e8;
+    border: 1px solid #7c00e8;
+    border-radius: 0.3rem;
+    cursor: not-allowed;
+    font-weight: bold;
+}
+
+.postCard{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.card{
+   display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+}
+
+.postMedia{
+    width: 50%;
+    height: auto;
+    
+    border-radius: 0.5rem;
+   
+}
+
+.workHistoryContainer{
+   display: flex;
+   gap: 1.4rem;
+   padding-top: 1.4rem;
+   width: 100%;
+   flex-wrap: wrap;
+}
+
+.workHistoryCard{
+   min-width: fit-content;
+   padding-inline: 2.5rem;
+   padding-block: 1rem;
+   border-radius: 10px;
+   box-shadow: 10px 10px 15px rgb(173, 173, 173);
+}
+
+.acceptButton {
+  background-color: #7c00e8; 
+  color: white;
+  border: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.acceptButton:hover {
+  background-color: #5800a5;
+}
+
+.acceptButton:active {
+  transform: scale(0.97);
+}
+
+.acceptButton svg{
+    background-color: #7c00e8 !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.denyButton{
+    border: none;
+}
+.denyButton svg {
+  background-color: #fff !important;
+  color: #7c00e8;
+  border-color: #7c00e8 !important;
+  height: 1.8rem;
+  width: 2rem;
+  padding: 0.1rem;
+  border-width: 2px !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.denyButton svg:hover {
+  background-color: #ccc !important;
+ color: #7c00e8 !important;
+}
+
+.userDetailSection_left{
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+    gap: 0.4rem;
+    width: 20vw;
+    padding-left: 3rem;
+}
+
+
+@media screen and (max-width:600px) {
+    .profileContainer{
+        max-width: 100%;
+        padding: 0;
+    }
+    .userDetailSection{
+        gap: 1.1rem;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        padding-left: 1.5rem;
+        padding-top: 0.7rem;
+    }
+    .backDropContainer{
+        border-radius: 0;
+        height: 8rem;
+    }
+    .backDropContainer img{
+        height: 6.5rem;
+        width: 6.5rem;
+        left: 5%;
+    }
+    .profileDetailsContainer{
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+        align-items: flex-start;
+    }
+    .userDetailSection_left{
+        flex-direction: row;
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .userDetailSection_left h2{
+        font-size: 1.35rem;
+    }
+    
+.userStats{
+    display: flex;
+    
+    margin-top: 1rem;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+}
+.userStats p{
+    font-size: 0.8rem;
+}
+.userStats p::after{
+    content: ".";
+}
+.connectedButton{
+    padding: 0.4rem 0.8rem;
+}
+.acceptButton svg{
+    display: none;
+}
+.profileStats{
+    padding: 0;
+}
+.workHistoryCard{
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 0.1px solid #ccc;
+    padding-inline: 1.5rem;
+}
+.workHistoryContainer{
+    gap: 0;
+    padding-top: 0;
+    
+}
+.profileStats h3{
+    padding-left: 1.5rem;
+} 
+.para{
+    padding-left: 1.5rem;
+
+}
+
+}

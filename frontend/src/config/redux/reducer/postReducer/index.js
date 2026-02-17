@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllPosts } from "../../action/postAction"
+import { getAllPosts, getCommentsByPost } from "../../action/postAction"
 
 
 
@@ -24,12 +24,12 @@ const postSlice = createSlice({
             state.postId=""
         },
     },
-})
+
 
 extraReducers: (builder) =>{
     builder
     .addCase(getAllPosts.pending, (state)=>{
-        state.isLoading = false,
+        state.isLoading = true,
         state.message= "Fetching all the posts..."
     })
     .addCase(getAllPosts.fulfilled, (state,action)=>{
@@ -43,7 +43,24 @@ extraReducers: (builder) =>{
         state.isError= true,
         state.message= action.payload
     })
+    .addCase(getCommentsByPost.pending, (state)=>{
+        state.isLoading = true,
+        state.message= "Fetching comments for the post..."
+    })
+    .addCase(getCommentsByPost.fulfilled, (state,action)=>{
+        state.postId= action.payload.postId,
+        state.isLoading= false,
+        state.isError= false,
+        state.comments = action.payload.comments.reverse()
+    })
+    .addCase(getCommentsByPost.rejected, (state, action)=>{
+        state.isLoading= false,
+        state.isError= true,
+        state.message= action.payload
+    })
 }
 
+});
 
-export default postSlice.reducer
+export const { reset, resetPostId } = postSlice.actions;
+export default postSlice.reducer;

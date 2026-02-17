@@ -21,3 +21,12 @@ export const store = configureStore({
 
     }
 })
+
+// Now the store is configured with auth and post reducers
+// You can now dispatch actions related to authentication and posts
+// and the state will be managed by the respective reducers.
+
+// Frontend backend se communicate karta hai through actions (createAsyncThunk) 
+// jahan data send aur receive hota hai. Backend response dene ke baad, reducers 
+// us response ke base par application state update karte hain, aur wahi updated 
+// state UI ko update karti hai.

@@ -14,6 +14,11 @@ function LoginComponent() {
     const dispatch = useDispatch();
 
     const [userLoginMethod, setUserLoginMethod] = useState(false);
+    // the userLoginMethod checks whether the user is logging in or registering.
+    // false means the user is registering, true means the user is logging in.
+    // By default, it is set to false, so the registration form is shown first.
+    // means it is true when the user already has an account and wants to log in.
+    // but initially it is false, so the sign-up form is shown first.
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -26,6 +31,17 @@ function LoginComponent() {
             router.push('/dashboard')
         }
     }, [authState.loggedIn])
+    // useEffect helps to perform side effects in functional components.
+    // In simple terms, we can use useEffect to run some code
+    //  when the component mounts, updates, or unmounts.
+    // Here, we are using useEffect to monitor changes to authState.loggedIn.
+    // When authState.loggedIn changes (for example, when a user successfully logs in),
+    // the effect will run and redirect the user to the '/dashboard' page using router.push('/dashboard').
+    
+// the array [authState.loggedIn] is the dependency array.
+// It tells React to only run the effect when authState.loggedIn changes.
+// If we left the dependency array empty ([]), the effect would only run once when the component mounts.
+// If we omitted the dependency array altogether, the effect would run after every render, which could lead to unnecessary redirects.
 
     useEffect(()=>{
         if(localStorage.getItem("token")){
@@ -33,19 +49,19 @@ function LoginComponent() {
         }
 
     },[])
-
+ 
     useEffect(() =>{
-        dispatch(emptyMessage)
+        dispatch(emptyMessage())
     }, [userLoginMethod])
 
     const handleRegister =()=>{
-        console.log("registering..");
+        
         dispatch(registerUser({username, password,email, name}));
 
     }
 
     const handleLogin =()=>{
-        console.log("logging in..")
+       
         dispatch(loginUser({email,password}));
     }
     return (
@@ -56,7 +72,7 @@ function LoginComponent() {
         <div className={styles.cardContainer}>
             <div className={styles.cardContainer_left}>
                 <p className={styles.cardLeft_heading}> {userLoginMethod? "Sign In": "Sign Up"}</p>
-                <p style={authState.isError? "red" : "green"}>{authState.message.message}</p>
+                <p style={{ color: authState.isError ? "red" : "green" }}>{authState.message}</p>
 
                 <div className={styles.inputContainer}>
                     
@@ -87,7 +103,7 @@ function LoginComponent() {
 
                     }
                 }}>
-                    <p>Sign Up</p>
+                    <p>{userLoginMethod? "Sign In" : "Sign Up"}</p>
                 </div>
 
                 </div>
@@ -95,8 +111,8 @@ function LoginComponent() {
             </div>
             <div className={styles.cardContainer_right}>
                 <div>
-                    {userLoginMethod? <p>Don't Have an Account</p> : 
-                    <p>Already Have An Account?</p>}
+                    {userLoginMethod? <h3>Don't Have an Account ?</h3> : 
+                    <h3>Already Have An Account ?</h3>}
                     <div onClick={()=>{
                         setUserLoginMethod(!userLoginMethod)
                     }} className={styles.signUpBtn} style={{textAlign: "center"}}>

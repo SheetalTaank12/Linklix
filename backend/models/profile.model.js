@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
 
 const educationSchema = new mongoose.Schema({
     school:{
@@ -52,6 +52,14 @@ const profileSchema = ({
     education:{
         type:[educationSchema],
         default:[]
+    },
+    connections:{
+        type:Number,
+        default:0
+    },
+    followers:{
+        type:Number,
+        default:0
     },
 });
 

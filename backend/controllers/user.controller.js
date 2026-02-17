@@ -149,7 +149,15 @@ export const login= async(req,res)=>{
 
 
 
-        return res.json({ token: token });
+        return res.json({
+  token,
+  user: {
+    _id: user._id,
+    name: user.name,
+    email: user.email
+  }
+});
+
     } catch(err){
         return res.status(500).json({message:err.message});
 
@@ -251,7 +259,17 @@ export const updateUserProfile= async(req,res)=>{
         return res.json({message : "User updated"});
 
     }catch(err){
-        return res.status(500).json({message: err.message});
+        //Mongo duplicate key error
+  if (err.code === 11000) {
+    return res.status(400).json({
+      message: "Email already exists"
+    });
+  }
+
+  // fallback
+  res.status(500).json({
+    message: "Something went wrong"
+  });
     }
 }
 
@@ -380,7 +398,7 @@ export const sendConnectionRequest = async(req,res)=>{
          });
 
          await request.save();
-
+            return res.json({message: "Connection request sent successfully"});
 
 
 
@@ -390,11 +408,43 @@ export const sendConnectionRequest = async(req,res)=>{
 }
 
 
+export const deleteConnectionRequest = async (req, res) => {
+  const { token, requestId } = req.body;
+  try{
+   const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const request = await ConnectionRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+      if (request.userId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: "Not allowed" });
+    }
+
+      await ConnectionRequest.findByIdAndDelete(requestId);
+   
+       return res.status(200).json({ message:"Request removed" });
+   
+  }
+ catch(err){
+        return res.status(500).json({message: err.message});
+    }
+ 
+
+  
+};
+
+
+
 
 
 //“Give me all requests where I am the request sender.”, which i have sent to all others
 export const getMyConnectionRequests= async(req,res)=>{
-    const {token} = req.body;
+    const {token} = req.query;
     try{
         const user = await User.findOne({token});
 
@@ -408,7 +458,7 @@ export const getMyConnectionRequests= async(req,res)=>{
         return res.json({connectionRequests});
     
     }catch(err){
-        return res.status(400).json({message: err.message});
+        return res.status(500).json({message: err.message});
     }
 }
 
@@ -416,17 +466,17 @@ export const getMyConnectionRequests= async(req,res)=>{
 
 //“Give me all requests where I am the receiver.”, which people have sent to me
 export const getUpcomingRequests = async(req,res)=>{
-    const{token}= req.body;
+    const{token}= req.query;
     try{
       const user = await User.findOne({token});
 
         if(!user){
             return res.status(404).json({message: "User not found"});
         }
-     const requests = await ConnectionRequest.find({connectionId: user._id})
+     const connectionRequests = await ConnectionRequest.find({connectionId: user._id})
      .populate('userId','name username email profilePicture');
 
-     return res.json(requests);
+     return res.json({connectionRequests});
      
 
     }catch(err){
@@ -435,41 +485,144 @@ export const getUpcomingRequests = async(req,res)=>{
 }
 
 
+//helper functions
+
+const incrementConnections = async (userId) => {
+  await Profile.updateOne(
+    { userId },
+    { $inc: { connections: 1 } }
+  );
+};
+
+const decrementConnections = async (userId) => {
+  await Profile.updateOne(
+    { userId },
+    { $inc: { connections: -1 } }
+  );
+};
+
+const incrementFollowers = async (userId) => {
+  await Profile.updateOne(
+    { userId },
+    { $inc: { followers: 1 } }
+  );
+};
+
+const decrementFollowers = async (userId) => {
+  await Profile.updateOne(
+    { userId },
+    { $inc: { followers: -1 } }
+  );
+};
+
+
 
 //accept or reject connection request
-export const acceptConnectionRequest = async(req,res)=>{
-    const{ token, requestId, action_type}= req.body;
+export const acceptConnectionRequest = async (req, res) => {
+  const { token, requestId } = req.body;
 
-    try{
-        const user = await User.findOne({token});
-
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
-
-        const request = await ConnectionRequest.findOne({_id: requestId});
-        if(!request){
-            return res.status(404).json({message: "Connection request not found"});
-        }
-
-        if(action_type=== "accept"){
-            request.status_accepted= true;
-        }else{
-            request.status_accepted = false;
-        }
-
-        await request.save();
-        return res.json({message: "Request updated"});
-        
-
-    }catch(err){
-        return res.status(500).json({message: err.message});
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    const request = await ConnectionRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    //  only receiver can accept
+    if (request.connectionId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    if (request.status_accepted) {
+      return res.status(400).json({ message: "Already accepted" });
+    }
+
+    request.status_accepted = true;
+    await request.save();
+
+    //  increment connections for both users
+    await incrementConnections(request.userId);
+    await incrementConnections(request.connectionId);
+
+    return res.json({ message: "Connection accepted" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+
+export const rejectConnectionRequest = async (req, res) => {
+  const { token, requestId } = req.body;
+
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const request = await ConnectionRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    // only receiver can reject
+    if (request.connectionId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // delete request completely
+    await ConnectionRequest.findByIdAndDelete(requestId);
+
+    return res.json({ message: "Connection request rejected successfully" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+
+
+export const removeConnection = async (req, res) => {
+  const { token, requestId } = req.body;
+
+  try {
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const request = await ConnectionRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: "Connection not found" });
+    }
+
+    // only receiver can remove
+    if ((user._id.toString() === request.connectionId.toString())||(user._id.toString() === request.userId._id.toString()) ) {
+      // delete connection completely
+    await ConnectionRequest.findByIdAndDelete(requestId);
+    }
+    else{
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    
+
+    return res.json({ message: "Connection removed successfully" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 
 //get all connections 
 export const getAllConnections = async (req, res) => {
-  const { token } = req.body;
+  const { token } = req.query;
 
   try {
     const user = await User.findOne({ token });
@@ -495,3 +648,120 @@ export const getAllConnections = async (req, res) => {
   }
 };
 
+
+// get user profile by username
+export const getUserProfileByUsername = async(req,res)=>{
+    try{
+        // req.query is used to get data from URL in GET request
+        // while req.body is used to get data from body in POST request
+        // and req.params is used to get data from URL parameters in both GET and POST requests
+        // when to use req.query vs req.params is decided by developer based on API design
+        // if data is optional or for filtering, req.query is used
+        // if data is mandatory to identify a resource, req.params is used
+        // for example, in /user/:id, id is mandatory to identify user, so req.params is used\
+        // in /search?name=john, name is optional for filtering, so req.query is used
+        // req.query and req.params mean same but differ in usage like when to use which
+    
+        const {username}= req.query;
+        const user = await User.findOne({username});
+
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+        const userProfile = await Profile.findOne({userId: user._id})
+        .populate("userId", "name email username profilePicture");
+        return res.json(userProfile);
+
+    }
+    catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+
+
+
+export const getMe = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token" });
+  }
+
+  const user = await User.findOne({ token }).select("-password");
+
+  if (!user) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  res.json(user);
+};
+
+
+export const deleteWorkInfo = async (req, res) => {
+  const { token, work_id } = req.body;
+
+  try {
+   
+    const user = await User.findOne({ token }).select("_id");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+   
+    const profile = await Profile.findOne({ userId: user._id });
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+   
+    const workExists = profile.pastWork.id(work_id);
+    if (!workExists) {
+      return res.status(404).json({ message: "Work info not found" });
+    }
+
+   
+    profile.pastWork.pull(work_id);
+
+    await profile.save();
+
+    return res.json({ message: "Work info deleted" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+export const deleteEducationInfo = async (req, res) => {
+  const { token, edu_id } = req.body;
+
+  try {
+   
+    const user = await User.findOne({ token }).select("_id");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+   
+    const profile = await Profile.findOne({ userId: user._id });
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+   
+    const eduExists = profile.education.id(edu_id);
+    if (!eduExists) {
+      return res.status(404).json({ message: "Education info not found" });
+    }
+
+   
+    profile.education.pull(edu_id);
+
+    await profile.save();
+
+    return res.json({ message: "Education info deleted" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
