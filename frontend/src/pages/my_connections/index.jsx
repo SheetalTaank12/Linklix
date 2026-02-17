@@ -36,7 +36,7 @@ useEffect(() => {
   }
 }, [authState.all_profiles_fetched]);
 
-
+ 
 // useEffect(() => {
 //   console.log("AUTH STATE:", authState);
 // }, [authState]);
