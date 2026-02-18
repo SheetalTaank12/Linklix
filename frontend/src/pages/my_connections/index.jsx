@@ -108,21 +108,21 @@ const handleRemoveConnection = async (e,requestId) => {
             
 {!authState.isLoading &&
   connections?.length > 0 &&
-  connections.map((connection) => {
+  connections?.map((connection) => {
     const connectedUser = getConnectedUser(connection);
 
     // 🔴 THIS WAS BLOCKING YOUR UI
     if (!connectedUser) return null;
 
     return (
-      <div key={connection._id} className={styles.card}>
+      <div key={connection?._id} className={styles.card}>
         <div
           className={styles.connectionCard}
-          onClick={() => router.push(`/view_profile/${connectedUser.username}`)}
+          onClick={() => router.push(`/view_profile/${connectedUser?.username}`)}
         >
           <div>
             <img
-              src={`${BASE_URL}/${connectedUser.profilePicture}`}
+              src={`${BASE_URL}/${connectedUser?.profilePicture}`}
               alt="Profile Picture"
               className={styles.profilePic}
             />
@@ -130,9 +130,9 @@ const handleRemoveConnection = async (e,requestId) => {
 
           <div className={styles.connectionInfo}>
             <div className={styles.userInfo}>
-              <p className={styles.name}>{connectedUser.name}</p>
+              <p className={styles.name}>{connectedUser?.name}</p>
               <p style={{ color: "grey" }}>
-                @{connectedUser.username}
+                @{connectedUser?.username}
               </p>
               
             </div>

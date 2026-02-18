@@ -176,7 +176,7 @@ const handleDeny = async (e,requestId) => {
             
 {!authState.isLoading &&
   sentRequests?.length > 0 &&
-  sentRequests.map((request) => {
+  sentRequests?.map((request) => {
    
     return (
       <div onClick={() => router.push(`/view_profile/${request?.connectionId?.username}`)} key={request._id} className={styles.card}>
@@ -244,10 +244,10 @@ const handleDeny = async (e,requestId) => {
             
 {!authState.isLoading &&
   receivedRequests?.length > 0 &&
-  receivedRequests.map((request) => {
+  receivedRequests?.map((request) => {
    
     return (
-      <div onClick={() => router.push(`/view_profile/${request?.userId?.username}`)} key={request._id} className={styles.card}>
+      <div onClick={() => router.push(`/view_profile/${request?.userId?.username}`)} key={request?._id} className={styles.card}>
         <div
           className={styles.connectionCard}
           

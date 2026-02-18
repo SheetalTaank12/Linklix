@@ -32,15 +32,15 @@ export default function DiscoverPage() {
                     <h1 className={styles.discoverHeader}><p>Discover</p></h1>
                     <div className={styles.allUserProfiles}>
                     {
-                        authState.all_users && authState.all_users.filter((user) => user?.userId?._id !== authState?.user?.userId?._id).map((user)=>(
+                        authState?.all_users && authState?.all_users.filter((user) => user?.userId?._id !== authState?.user?.userId?._id).map((user)=>(
                             <div onClick={()=>{
-                                router.push(`/view_profile/${user.userId.username}`)
+                                router.push(`/view_profile/${user?.userId?.username}`)
                             }}
-                             key={user._id} className={styles.userCard}>
-                                <img src={`${BASE_URL}/${user.userId.profilePicture}` || './images/default.jpg'} alt="" className={styles.profilePicture}/>
+                             key={user?._id} className={styles.userCard}>
+                                <img src={`${BASE_URL}/${user?.userId?.profilePicture}` || './images/default.jpg'} alt="" className={styles.profilePicture}/>
                                 <div className={styles.userInfo}>
-                                <h3>{user.userId.name}</h3>
-                                <p>@{user.userId.username}</p>
+                                <h3>{user?.userId?.name}</h3>
+                                <p>@{user?.userId?.username}</p>
                                 </div>
                             </div>
                         ))

@@ -152,27 +152,27 @@ const handleDeny = async () => {
         <div className={styles.profileContainer}>
           <div className={styles.backDropContainer}>
          
-          <img src={`${BASE_URL}/${userProfile.userProfile.userId.profilePicture}`} alt="Backdrop Image" className={styles.backDropImage}/>
+          <img src={`${BASE_URL}/${userProfile?.userProfile?.userId?.profilePicture}`} alt="Backdrop Image" className={styles.backDropImage}/>
           </div>
           <div className={styles.profileDetailsContainer}>
            
             <div className={styles.userDetailSection}>
 
                 <div className={styles.userDetailSection_left}>
-                <h2>{userProfile.userProfile.userId.name}</h2>
-                <p style={{color:"grey"}}>@{userProfile.userProfile.userId.username}</p>
+                <h2>{userProfile?.userProfile?.userId?.name}</h2>
+                <p style={{color:"grey"}}>@{userProfile?.userProfile?.userId?.username}</p>
                 
-                 <p style={{marginTop: "0.4rem"}}>{userProfile.userProfile.bio}</p>
+                 <p style={{marginTop: "0.4rem"}}>{userProfile?.userProfile?.bio}</p>
                
                 
                 </div>
                 <div className={styles.userStats}>
                   
 
-                   <p>{userProfile.userProfile.followers} Followers</p>
-                   <p>{userProfile.userProfile.connections} Connections</p>
+                   <p>{userProfile?.userProfile?.followers} Followers</p>
+                   <p>{userProfile?.userProfile?.connections} Connections</p>
                    
-                   <p>{userPosts.length} Posts</p>
+                   <p>{userPosts?.length} Posts</p>
                    <div>
                   {relationshipStatus === "incoming" ? (
   <div style={{ display: "flex", gap: "0.3rem" }}>
@@ -219,7 +219,7 @@ const handleDeny = async () => {
 
                 <div  onClick={async()=>{
                   const response = await clientServer.get(`/user/download_resume?id=${userProfile?.userProfile?.userId?._id}`);
-                  window.open(`${BASE_URL}/${response.data.message}`,"_blank")
+                  window.open(`${BASE_URL}/${response?.data?.message}`,"_blank")
                 }} 
                 style={{cursor:"pointer"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.2} stroke="currentColor" className="size-6">
@@ -235,19 +235,19 @@ const handleDeny = async () => {
               <h3>Work History</h3>
               
               <div className={styles.workHistoryContainer}>
-               {userProfile.userProfile.pastWork.length === 0 && (
+               {userProfile?.userProfile?.pastWork?.length === 0 && (
                 <p className={styles.para}>No work history added yet</p>
               )}
               {
-              userProfile.userProfile.pastWork.map((work,index)=>{
+              userProfile?.userProfile?.pastWork?.map((work,index)=>{
                 return(
                 
                   <div key={index} className={styles.workHistoryCard}>
                    
                   <p style={{fontWeight:"bold"}}>
-                    {work.company} - {work.position}
+                    {work?.company} - {work?.position}
                   </p>
-                  <p>{work.years}</p>
+                  <p>{work?.years}</p>
 
                   </div>
                 )
@@ -263,19 +263,19 @@ const handleDeny = async () => {
               <h3>Education</h3>
               
               <div className={styles.workHistoryContainer}>
-               {userProfile.userProfile.education.length === 0 && (
+               {userProfile?.userProfile?.education?.length === 0 && (
                 <p className={styles.para}>No education history added yet</p>
               )}
               {
-              userProfile.userProfile.education.map((field,index)=>{
+              userProfile?.userProfile?.education?.map((field,index)=>{
                 return(
                 
                   <div key={index} className={styles.workHistoryCard}>
                    
                   <p style={{fontWeight:"bold"}}>
-                    {field.school} - {field.degree}
+                    {field?.school} - {field?.degree}
                   </p>
-                  <p>{field.fieldOfStudy}</p>
+                  <p>{field?.fieldOfStudy}</p>
 
                   </div>
                 )
@@ -288,20 +288,20 @@ const handleDeny = async () => {
 
             <div className={styles.profileStats}>
               <h3>Activity</h3>
-               {userPosts.length === 0 && (
+               {userPosts?.length === 0 && (
                 <p className={styles.para}>No posts created yet</p>
               )}
              
-              {userPosts.map((post)=>{
+              {userPosts?.map((post)=>{
                 return (
                   <div key={post?._id}  className={styles.postCard}>
 
                     <div className={styles.card}>
                 <div className={styles.profileContainer}>
-                {post.media !== "" ? <img src={`${BASE_URL}/${post.media}`} alt="Post Media" className={styles.postMedia}/>
+                {post?.media !== "" ? <img src={`${BASE_URL}/${post?.media}`} alt="Post Media" className={styles.postMedia}/>
                  : <div> <img src={`${BASE_URL}/default_post_image.png`} alt="Default Post Media" className={styles.postMedia}/></div>}
                   </div>
-                  <p>{post.body}</p>
+                  <p>{post?.body}</p>
                 
                 </div>
                 </div>
@@ -329,7 +329,7 @@ export async function getServerSideProps(context) {
     }
   });
   // console.log(context.query.username);
-  const userData = request.data;
+  const userData = request?.data;
   // console.log("User data fetched from server:", userData);
     return {
         props: {

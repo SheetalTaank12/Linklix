@@ -319,7 +319,7 @@ const handleUploadEduData= async(updatedData)=>{
                    <p>{userProfileData?.followers} Followers</p>
                    <p>{userProfileData?.connections} Connections</p>
                    
-                   <p>{userPosts.length} Posts</p>
+                   <p>{userPosts?.length} Posts</p>
                    <div>
                    
                   
@@ -334,7 +334,7 @@ const handleUploadEduData= async(updatedData)=>{
                 
                 <div  onClick={async()=>{
                   const response = await clientServer.get(`/user/download_resume?id=${userProfileData?.userId?._id}`);
-                  window.open(`${BASE_URL}/${response.data.message}`,"_blank")
+                  window.open(`${BASE_URL}/${response?.data?.message}`,"_blank")
                 }} 
                 style={{cursor:"pointer"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.2} stroke="currentColor" className="size-6">
