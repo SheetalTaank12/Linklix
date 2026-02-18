@@ -136,7 +136,7 @@ const handleLike = async (postId) => {
                 </div>
 
                 <div className={styles.postContainer}>
-                    {postState.posts.map((post)=>{
+                    {postState?.posts?.map((post)=>{
                         return(
 
                             // console.log("POST USER ID:", post?.userId?._id),
