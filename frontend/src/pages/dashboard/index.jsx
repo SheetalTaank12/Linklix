@@ -75,7 +75,7 @@ const handleLike = async (postId) => {
 
 
     const handleShareOnTwitter = (post) => {
-    const text = encodeURIComponent(post.body);
+    const text = encodeURIComponent(post?.body);
      const url = encodeURIComponent(`${BASE_URL}/post/${post?._id}`);
 
     const twitterUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
@@ -119,13 +119,13 @@ const handleLike = async (postId) => {
                         </label> 
                         {fileContent && (
                        <p className={styles.fileName}>
-                         {fileContent.name}
+                         {fileContent?.name}
                         </p>
                         )}
                        
 
                        <input onChange={(e)=>setFileContent(e.target.files[0])} type="file" hidden id="fileUpload"/> 
-                       {postContent.length>0 &&
+                       {postContent?.length>0 &&
                        <div onClick={handleUpload} className={styles.uploadBtn}>Post</div>}
 
                        
@@ -152,8 +152,8 @@ const handleLike = async (postId) => {
                                        className={styles.topDiv_left}>
                                         <img className={styles.userProfile} src={`${BASE_URL}/${post?.userId?.profilePicture}`} alt="" />
                                         <div>
-                                            <p style={{fontWeight:"bold"}}>{post.userId.name}</p>
-                                            <p style={{color:"grey"}}>@{post.userId.username}</p>
+                                            <p style={{fontWeight:"bold"}}>{post?.userId?.name}</p>
+                                            <p style={{color:"grey"}}>@{post?.userId?.username}</p>
 
                                         </div>
                                         </div> 
@@ -171,9 +171,9 @@ const handleLike = async (postId) => {
                                     
                                     </div>
                                 <div className={styles.middleDiv}>
-                                 <p style={{paddingTop:"0.3rem"}}>{post.body}</p>
+                                 <p style={{paddingTop:"0.3rem"}}>{post?.body}</p>
                                     <div className={styles.singleCard_image}>
-                                        <img src={`${BASE_URL}/${post.media}`}/>
+                                        <img src={`${BASE_URL}/${post?.media}`}/>
 
                                     </div>
 
@@ -207,7 +207,7 @@ const handleLike = async (postId) => {
                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
 </svg>
-                                        {post.comments}
+                                        {post?.comments}
                                         </div>
 
                                        
@@ -234,7 +234,7 @@ const handleLike = async (postId) => {
 
 
                 {
-                    postState.postId !== "" &&
+                    postState?.postId !== "" &&
                     <div onClick={()=>{
                         dispatch(resetPostId());
                     }}
@@ -244,16 +244,16 @@ const handleLike = async (postId) => {
                     }}
                     className={styles.commentsSection}>
 
-                        {postState.comments.length===0 &&
+                        {postState?.comments?.length===0 &&
                         <h2 className={styles.commentsHeading}>No Comments Yet</h2>
                         }
 
 
 
-                        {postState.comments.length>0 && 
+                        {postState?.comments?.length>0 && 
                         <div className={styles.allComments}>
                          <h2 id="top"  style={{scrollBehavior:"smooth"}} className={styles.commentsHeading}>Comments</h2>
-                        {postState.comments.map((comment)=>{
+                        {postState?.comments?.map((comment)=>{
                             return(
                                 <div key={comment?._id} className={styles.singleComment}>
                                     <div className={styles.singleComment_profileContainer}>
@@ -277,7 +277,7 @@ const handleLike = async (postId) => {
                                        )}  
                                     </div>  
                                     </div>
-                                    <p className={styles.commentBody}>{comment.body}</p>
+                                    <p className={styles.commentBody}>{comment?.body}</p>
 
                                 </div>
                             )
