@@ -104,7 +104,7 @@ const handleLike = async (postId) => {
                 <div className={styles.scrollComponent}>
                     <div className={styles.createPostContainer}>
                         
-                        <img className={styles.userProfile}  src={authState?.user?.userId?.profilePicture} alt="text"/>
+                        <img className={styles.userProfile}  src={authState?.user?.userId?.profilePicture || "/default.jpg"} alt="text"/>
                         
                         <textarea onChange={(e)=>setPostContent(e.target.value)} value={postContent} placeholder={"What's in your mind?"} className={styles.textareaOfContent} name="" id=""></textarea>
 
@@ -150,7 +150,7 @@ const handleLike = async (postId) => {
                                      <div className={styles.topDiv}>
                                       <div onClick={() => router.push(`/view_profile/${post?.userId?.username}`)} 
                                        className={styles.topDiv_left}>
-                                        <img className={styles.userProfile} src={`${BASE_URL}/${post?.userId?.profilePicture}`} alt="" />
+                                        <img className={styles.userProfile} src={post?.userId?.profilePicture} alt="" />
                                         <div>
                                             <p style={{fontWeight:"bold"}}>{post?.userId?.name}</p>
                                             <p style={{color:"grey"}}>@{post?.userId?.username}</p>
@@ -173,7 +173,7 @@ const handleLike = async (postId) => {
                                 <div className={styles.middleDiv}>
                                  <p style={{paddingTop:"0.3rem"}}>{post?.body}</p>
                                     <div className={styles.singleCard_image}>
-                                        <img src={`${BASE_URL}/${post?.media}`}/>
+                                        <img src={post?.media}/>
 
                                     </div>
 
@@ -257,7 +257,7 @@ const handleLike = async (postId) => {
                             return(
                                 <div key={comment?._id} className={styles.singleComment}>
                                     <div className={styles.singleComment_profileContainer}>
-                                     <img className={styles.userProfileInComment} src={`${BASE_URL}/${comment?.userId?.profilePicture}`} alt="" />
+                                     <img className={styles.userProfileInComment} src={comment?.userId?.profilePicture} alt="" />
                                      <div style={{display:"flex",alignItems:"center", justifyContent:"space-between",width:"100%"}}>
                                         <div>
                                     <p style={{fontWeight:"bold"}}>{comment?.userId?.name} </p>

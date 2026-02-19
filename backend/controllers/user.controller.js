@@ -174,7 +174,7 @@ export const login= async(req,res)=>{
 
 //upload profile picture 
 
-import cloudinary from "../config/cloudinary.js";
+
 
 export const uploadProfilePicture = async (req, res) => {
   const { token } = req.body;
