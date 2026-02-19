@@ -186,7 +186,7 @@ const handleDeny = async (e,requestId) => {
         >
           <div>
             <img
-              src={`${BASE_URL}/${request?.connectionId?.profilePicture}`}
+              src={request?.connectionId?.profilePicture}
               alt="Profile Picture"
               className={styles.profilePic}
             />
@@ -254,7 +254,7 @@ const handleDeny = async (e,requestId) => {
         >
           <div>
             <img
-              src={`${BASE_URL}/${request?.userId?.profilePicture}`}
+              src={request?.userId?.profilePicture}
               alt="Profile Picture"
               className={styles.profilePic}
             />

@@ -152,7 +152,7 @@ const handleDeny = async () => {
         <div className={styles.profileContainer}>
           <div className={styles.backDropContainer}>
          
-          <img src={`${BASE_URL}/${userProfile?.userProfile?.userId?.profilePicture}`} alt="Backdrop Image" className={styles.backDropImage}/>
+          <img src={userProfile?.userProfile?.userId?.profilePicture} alt="Backdrop Image" className={styles.backDropImage}/>
           </div>
           <div className={styles.profileDetailsContainer}>
            
@@ -298,8 +298,8 @@ const handleDeny = async () => {
 
                     <div className={styles.card}>
                 <div className={styles.profileContainer}>
-                {post?.media !== "" ? <img src={`${BASE_URL}/${post?.media}`} alt="Post Media" className={styles.postMedia}/>
-                 : <div> <img src={`${BASE_URL}/default_post_image.png`} alt="Default Post Media" className={styles.postMedia}/></div>}
+                {post?.media !== "" ? <img src={post?.media} alt="Post Media" className={styles.postMedia}/>
+                 : <div> <img src={``} alt="Default Post Media" className={styles.postMedia}/></div>}
                   </div>
                   <p>{post?.body}</p>
                 

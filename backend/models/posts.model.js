@@ -32,6 +32,9 @@ const PostSchema = new mongoose.Schema({
         default: ''
 
     },
+    mediaPublicId: {
+        type: String,
+    },
     active:{
         type: Boolean,
         default: true

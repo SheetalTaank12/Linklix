@@ -122,7 +122,7 @@ const handleRemoveConnection = async (e,requestId) => {
         >
           <div>
             <img
-              src={`${BASE_URL}/${connectedUser?.profilePicture}`}
+              src={connectedUser?.profilePicture}
               alt="Profile Picture"
               className={styles.profilePic}
             />

@@ -266,7 +266,7 @@ const handleUploadEduData= async(updatedData)=>{
         { <div className={styles.profileContainer}>
           <div className={styles.backDropContainer}>
          
-          <img src={`${BASE_URL}/${userProfileData?.userId?.profilePicture}`} alt="Backdrop Image" className={styles.backDropImage}/>
+          <img src={userProfileData?.userId?.profilePicture} alt="Backdrop Image" className={styles.backDropImage}/>
           <div
            className={styles.overlay}>
             <label htmlFor="profilePicUpload">
@@ -636,8 +636,8 @@ const handleUploadEduData= async(updatedData)=>{
 
                     <div className={styles.card}>
                 <div className={styles.profileContainer}>
-                {post.media !== "" ? <img src={`${BASE_URL}/${post.media}`} alt="Post Media" className={styles.postMedia}/>
-                 : <div> <img src={`${BASE_URL}/default_post_image.png`} alt="Default Post Media" className={styles.postMedia}/></div>}
+                {post.media !== "" ? <img src={post.media} alt="Post Media" className={styles.postMedia}/>
+                 : <div> <img src={``} alt="Default Post Media" className={styles.postMedia}/></div>}
                   </div>
                   <p>{post.body}</p>
                 

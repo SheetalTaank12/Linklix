@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import bcrypt from "bcrypt";
 import PDFdocument from 'pdfkit';
 import fs from 'fs';
+import cloudinary from "../config/cloudinary.js";
 
 import Post from "../models/posts.model.js";
 
@@ -172,44 +173,48 @@ export const login= async(req,res)=>{
 
 
 //upload profile picture 
-export const uploadProfilePicture= async(req,res)=>{
-    const {token} = req.body;
 
-    try{
+import cloudinary from "../config/cloudinary.js";
 
-        const user = await User.findOne({token: token});
-        
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
+export const uploadProfilePicture = async (req, res) => {
+  const { token } = req.body;
 
+  try {
+    const user = await User.findOne({ token });
 
-// req.file.filename is set by Multer (customizable)
-//When a file is uploaded, Multer creates a req.file object (for single file) or req.files (for multiple files).
-
-//sample req.file looks like 
-// req.file = {
-//   fieldname: 'profilePicture',     // The name attribute in HTML form
-//   originalname: 'myphoto.jpg',     // Original file name uploaded by user
-//   encoding: '7bit',
-//   mimetype: 'image/jpeg',
-//   destination: 'uploads/',          // Folder where Multer saved the file
-//   filename: '1699999999999-myphoto.jpg',  // Generated file name (this is what Multer set)
-//   path: 'uploads/1699999999999-myphoto.jpg',
-//   size: 34567
-// }
-
-
-        user.profilePicture= req.file.filename;
-        await user.save();
-
-        return res.json({message:"Profile Picture Updated"});
-
-    }catch(err){
-   return res.status(500).json({message: err.message});
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
 
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // STEP 1: Delete old image if exists
+    if (user.profilePublicId) {
+      await cloudinary.uploader.destroy(user.profilePublicId);
+    }
+
+    // STEP 2: Upload new image
+    const result = await cloudinary.uploader.upload(
+      `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+      {
+        folder: "linklix/profile_pictures",
+      }
+    );
+
+    //  STEP 3: Save new data
+    user.profilePicture = result.secure_url;
+    user.profilePublicId = result.public_id;
+
+    await user.save();
+
+    return res.json({ message: "Profile Picture Updated" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
 
 
 //update username and email

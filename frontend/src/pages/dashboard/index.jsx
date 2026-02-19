@@ -104,7 +104,7 @@ const handleLike = async (postId) => {
                 <div className={styles.scrollComponent}>
                     <div className={styles.createPostContainer}>
                         
-                        <img className={styles.userProfile}  src={`${BASE_URL}/${authState?.user?.userId?.profilePicture}`} alt="text"/>
+                        <img className={styles.userProfile}  src={authState?.user?.userId?.profilePicture} alt="text"/>
                         
                         <textarea onChange={(e)=>setPostContent(e.target.value)} value={postContent} placeholder={"What's in your mind?"} className={styles.textareaOfContent} name="" id=""></textarea>
 

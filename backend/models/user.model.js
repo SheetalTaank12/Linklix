@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
         
         default: 'default.jpg'
     },
+    profilePublicId: {
+        type: String,
+    },
     createdAt:{
         type: Date,
         default: Date.now
