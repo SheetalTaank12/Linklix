@@ -151,6 +151,7 @@ const handleDeny = async () => {
       <DashboardLayout>
         <div className={styles.profileContainer}>
           <div className={styles.backDropContainer}>
+           { console.log(userProfile.userProfile.userId)}
          
           <img src={userProfile?.userProfile?.userId?.profilePicture || "/default.jpg"} alt="Backdrop image" className={styles.backDropImage}/>
           </div>
