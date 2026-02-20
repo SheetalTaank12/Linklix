@@ -150,7 +150,7 @@ const handleLike = async (postId) => {
                                      <div className={styles.topDiv}>
                                       <div onClick={() => router.push(`/view_profile/${post?.userId?.username}`)} 
                                        className={styles.topDiv_left}>
-                                        <img className={styles.userProfile} src={post?.userId?.profilePicture} alt="" />
+                                        <img className={styles.userProfile} src={post?.userId?.profilePicture || "/default.jpg"} alt="" />
                                         <div>
                                             <p style={{fontWeight:"bold"}}>{post?.userId?.name}</p>
                                             <p style={{color:"grey"}}>@{post?.userId?.username}</p>
@@ -257,7 +257,7 @@ const handleLike = async (postId) => {
                             return(
                                 <div key={comment?._id} className={styles.singleComment}>
                                     <div className={styles.singleComment_profileContainer}>
-                                     <img className={styles.userProfileInComment} src={comment?.userId?.profilePicture} alt="" />
+                                     <img className={styles.userProfileInComment} src={comment?.userId?.profilePicture || "/default.jpg"} alt="" />
                                      <div style={{display:"flex",alignItems:"center", justifyContent:"space-between",width:"100%"}}>
                                         <div>
                                     <p style={{fontWeight:"bold"}}>{comment?.userId?.name} </p>

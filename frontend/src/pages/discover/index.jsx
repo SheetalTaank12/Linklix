@@ -37,7 +37,7 @@ export default function DiscoverPage() {
                                 router.push(`/view_profile/${user?.userId?.username}`)
                             }}
                              key={user?._id} className={styles.userCard}>
-                                <img src={`${user?.userId?.profilePicture}` || './images/default.jpg'} alt="" className={styles.profilePicture}/>
+                                <img src={user?.userId?.profilePicture || "/default.jpg"} alt="" className={styles.profilePicture}/>
                                 <div className={styles.userInfo}>
                                 <h3>{user?.userId?.name}</h3>
                                 <p>@{user?.userId?.username}</p>

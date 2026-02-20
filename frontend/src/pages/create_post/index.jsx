@@ -54,7 +54,7 @@ export default function CreatePostPage() {
                <div className={styles.createPostContainer}>
                         <div className={styles.top}>
                         <div className={styles.top_left}>
-                          <img className={styles.userProfile}  src={authState?.user?.userId?.profilePicture} alt="text"/> 
+                          <img className={styles.userProfile}  src={authState?.user?.userId?.profilePicture || "/default.jpg"} alt="text"/> 
                           <h4>{authState?.user?.userId?.name}</h4>
                           </div>
                          <div className={styles.top_right}>
