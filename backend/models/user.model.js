@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     },
     profilePublicId: {
         type: String,
+        default: null
     },
     createdAt:{
         type: Date,
