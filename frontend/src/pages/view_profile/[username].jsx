@@ -153,7 +153,7 @@ const handleDeny = async () => {
           <div className={styles.backDropContainer}>
            { console.log(userProfile.userProfile.userId)}
          
-          <img src={`${userProfile?.userProfile?.userId?.profilePicture}` || './images/default.jpg'} alt="Backdrop image" className={styles.backDropImage}/>
+          <img src={`${userProfile?.userProfile?.userId?.profilePicture}` || "/default.jpg"} alt="Backdrop image" className={styles.backDropImage}/>
           </div>
           <div className={styles.profileDetailsContainer}>
            
