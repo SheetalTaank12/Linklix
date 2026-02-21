@@ -95,6 +95,13 @@
     background-color: black;
 }
 
+.formError {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
 @media screen and (max-width:600px) {
     .cardContainer{
         flex-direction: column;

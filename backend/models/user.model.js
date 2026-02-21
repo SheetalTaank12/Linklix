@@ -3,17 +3,25 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        minlength: 3,
+    maxlength: 30,
+    trim: true
     },
     username:{
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        minlength: 3,
+       maxlength: 20,
+      trim: true
     },
     email:{
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        maxlength: 40,
+    trim: true
     },
     active:{
         type: Boolean,
@@ -22,7 +30,9 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type: String,
-        required: true
+        required: true,
+        minlength: 6,
+    maxlength: 100
     },
     profilePicture:{
         type: String,

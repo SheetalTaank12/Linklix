@@ -26,6 +26,9 @@ function LoginComponent() {
     const [name, setName] = useState("");
 
 
+    const [formErrors, setFormErrors] = useState({});
+   
+
     useEffect(() =>{
         if (authState.loggedIn){
             router.push('/dashboard')
@@ -54,11 +57,30 @@ function LoginComponent() {
         dispatch(emptyMessage())
     }, [userLoginMethod])
 
-    const handleRegister =()=>{
-        
-        dispatch(registerUser({username, password,email, name}));
+    const handleRegister = () => {
 
+    let errors = {};
+
+    if(username.length < 3 || username.length > 20){
+        errors.username = "Username must be 3–20 characters";
     }
+
+    if(name.length < 2 || name.length > 30){
+        errors.name = "Name must be 2–30 characters";
+    }
+
+    if(password.length < 6 || password.length > 20){
+        errors.password = "Password must be 6–20 characters";
+    }
+
+    if(Object.keys(errors).length > 0){
+        setFormErrors(errors);
+        return;
+    }
+
+    setFormErrors({});
+    dispatch(registerUser({username, password,email, name}));
+};
 
     const handleLogin =()=>{
        
@@ -72,6 +94,9 @@ function LoginComponent() {
         <div className={styles.cardContainer}>
             <div className={styles.cardContainer_left}>
                 <p className={styles.cardLeft_heading}> {userLoginMethod? "Sign In": "Sign Up"}</p>
+                {formError && (
+  <p className={styles.formError}>{formError}</p>
+)}
                 <p style={{ color: authState.isError ? "red" : "green" }}>{authState?.message}</p>
 
                 <div className={styles.inputContainer}>
@@ -79,19 +104,32 @@ function LoginComponent() {
                     {!userLoginMethod&& <div className={styles.inputRow}>
                 <input onChange={(e)=>{
                     setUsername(e.target.value)
-                }} className={styles.inputField} type='text' placeholder='Username'/>
+                }} minLength={3} maxLength={20} className={styles.inputField} type='text' placeholder='Username'/>
+                {formErrors.username && (
+  <p className={styles.formError}>{formErrors.username}</p>
+)}
                 <input onChange={(e)=>{
                     setName(e.target.value)
-                }} className={styles.inputField} type='text' placeholder='Name'/>
+                }} minLength={3} maxLength={30} className={styles.inputField} type='text' placeholder='Name'/>
+                {formErrors.name && (
+  <p className={styles.formError}>{formErrors.name}</p>
+)}
                 </div>}
 
 
                 <input onChange={(e)=>{
                     setEmail(e.target.value)
-                }} className={styles.inputField} type='email' placeholder='Email'/>
+                }} maxLength={40} className={styles.inputField} type='email' placeholder='Email'/>
+                {formErrors.email && (
+  <p className={styles.formError}>{formErrors.email}</p>
+)}
                 <input onChange={(e)=>{
                     setPassword(e.target.value)
-                }} className={styles.inputField} type='password' placeholder='Password'/>
+                }} minLength={6}  maxLength={20} 
+                className={styles.inputField} type='password' placeholder='Password'/>
+                {formErrors.password && (
+  <p className={styles.formError}>{formErrors.password}</p>
+)}
 
 
                 <div className={styles.signUpBtn} onClick={()=>{

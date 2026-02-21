@@ -50,6 +50,21 @@ export const register = async(req,res)=>{
     try{
      //Works because: req.body has keys called name, email, password, username
         const {name,email,password,username}= req.body;
+        if(username.length < 3 || username.length > 20){
+    return res.status(400).json({message: "Username must be 3-20 characters"});
+}
+
+if(name.length < 2 || name.length > 30){
+    return res.status(400).json({message: "Name must be 2-30 characters"});
+}
+
+if(email.length > 50){
+    return res.status(400).json({message: "Email must not exceed 50 characters"});
+}
+
+if(password.length < 6 || password.length > 20){
+    return res.status(400).json({message: "Password must be 6-20 characters"});
+}
 
 
 //         If you want different variable names, you must map them:
