@@ -173,7 +173,7 @@ const handleLike = async (postId) => {
                                     
                                     </div>
                                 <div className={styles.middleDiv}>
-                                 <p style={{paddingTop:"0.3rem"}}>{post?.body}</p>
+                                 <p className={styles.postBody} style={{paddingTop:"0.3rem"}}>{post?.body}</p>
                                     <div className={styles.singleCard_image}>
                                         <img src={post?.media}/>
 

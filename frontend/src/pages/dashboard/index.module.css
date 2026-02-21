@@ -69,13 +69,15 @@
     padding-inline: 1.5rem;
     padding-block: 0.8rem;
     outline: none;
-    white-space: pre-wrap;
+
 }
-.charCount {
-  font-size: 12px;
-  color: gray;
-  text-align: right;
-  margin-top: 4px;
+
+.postBody {
+  padding-top: 0.3rem;
+  white-space: pre-wrap;     /* keeps line breaks */
+  word-break: break-word;    /* breaks long words */
+  overflow-wrap: break-word; /* extra safety */
+  
 }
 
 .uploadBtn{
@@ -379,6 +381,9 @@ width: 3rem !important;
     }
     .allComments{
         max-width: 100%;
+    }
+    .postBody{
+        padding-right: 0.5rem;
     }
     
 }

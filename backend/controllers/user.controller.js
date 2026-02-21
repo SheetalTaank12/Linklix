@@ -71,7 +71,7 @@ if(password.length < 6 || password.length > 20){
 // const { name: Name, email: Email, password: pass, username: usrname} = req.body;
 
         if(!name|| !email || !password || !username){
-            return res.status(400).json({message: "All files are required"});
+            return res.status(400).json({message: "All fields are required"});
         }
 
 
