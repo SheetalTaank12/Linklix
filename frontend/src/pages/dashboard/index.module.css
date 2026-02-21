@@ -69,7 +69,13 @@
     padding-inline: 1.5rem;
     padding-block: 0.8rem;
     outline: none;
-
+    white-space: pre-wrap;
+}
+.charCount {
+  font-size: 12px;
+  color: gray;
+  text-align: right;
+  margin-top: 4px;
 }
 
 .uploadBtn{

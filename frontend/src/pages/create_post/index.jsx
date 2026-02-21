@@ -65,8 +65,10 @@ export default function CreatePostPage() {
                           </div> 
 
                         </div>
-                        <textarea onChange={(e)=>setPostContent(e.target.value)} value={postContent} placeholder={"What's in your mind?"} className={styles.textareaOfContent} name="" id=""></textarea>
-
+                        <textarea  maxLength={500} onChange={(e)=>setPostContent(e.target.value)} value={postContent} placeholder={"What's in your mind?"} className={styles.textareaOfContent} name="" id=""></textarea>
+                      <p className={styles.charCount}>
+  {postContent.length}/500
+</p>
                         <div className={styles.uploadWrapper}>
                         <label htmlFor="fileUpload">
                         <div className={styles.Fab}>
