@@ -65,8 +65,8 @@ function LoginComponent() {
         errors.username = "Username must be 3-20 characters";
     }
 
-    if(name.length < 2 || name.length > 30){
-        errors.name = "Name must be 2-30 characters";
+    if(name.length < 3 || name.length > 30){
+        errors.name = "Name must be 3-30 characters";
     }
 
     if(password.length < 6 || password.length > 20){

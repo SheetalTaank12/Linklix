@@ -4,16 +4,16 @@ const userSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
-        minlength: 3,
-    maxlength: 30,
+        minlength: [3, "Name must be at least 3 characters"],
+    maxlength: [30, "Name cannot exceed 30 characters"],
     trim: true
     },
     username:{
         type: String,
         required: true,
         unique: true,
-        minlength: [3, "Name must be at least 3 characters"],
-       maxlength: [20, "Name cannot exceed 30 characters"],
+        minlength:3 ,
+       maxlength: 20,
       trim: true
     },
     email:{
