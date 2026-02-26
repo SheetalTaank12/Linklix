@@ -120,7 +120,7 @@ if(password.length < 6 || password.length > 20){
             message: "Username already exists"
         });
     }
-
+     console.log(err.name);
     //Mongoose validation error
     if (err.name === "ValidationError") {
 
