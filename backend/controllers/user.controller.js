@@ -112,9 +112,31 @@ if(password.length < 6 || password.length > 20){
         return res.json({message : "User Created"});
 
 
-    }catch(err){
-        return res.status(500).json({message:err.message});
+    }catch (err) {
+
+    //Duplicate key error (like username already exists)
+    if (err.code === 11000) {
+        return res.status(400).json({
+            message: "Username already exists"
+        });
     }
+
+    //Mongoose validation error
+    if (err.name === "ValidationError") {
+
+        // Get first validation message
+        const firstError = Object.values(err.errors)[0].message;
+
+        return res.status(400).json({
+            message: firstError
+        });
+    }
+
+    //Default fallback
+    return res.status(500).json({
+        message: "Something went wrong"
+    });
+}
 }
 
 
