@@ -7,7 +7,7 @@
 }
 
 .cardContainer{
-    height: 80vh;
+    min-height: 80vh;
     display: flex;
     border-radius: 10px;
     overflow: hidden;
@@ -114,6 +114,7 @@
     .cardContainer_right{
         height: 100%;
         width: 100%;
+        padding-block: 1rem;
     }
     
 .cardLeft_heading{
