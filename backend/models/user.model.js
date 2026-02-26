@@ -16,13 +16,18 @@ const userSchema = new mongoose.Schema({
        maxlength: 20,
       trim: true
     },
-    email:{
-        type: String,
-        required: true,
-        unique: true,
-        maxlength: 40,
-    trim: true
-    },
+    email: {
+  type: String,
+  required: [true, "Email is required"],
+  unique: true,
+  lowercase: true,
+  trim: true,
+  maxlength: 40,
+  match: [
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    "Please enter a valid email address"
+  ]
+},
     active:{
         type: Boolean,
         default: true,

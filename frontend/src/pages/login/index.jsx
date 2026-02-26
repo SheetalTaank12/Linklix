@@ -69,6 +69,10 @@ function LoginComponent() {
         errors.name = "Name must be 3-30 characters";
     }
 
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Please enter a valid email address";
+}
+
     if(password.length < 6 || password.length > 20){
         errors.password = "Password must be 6-20 characters";
     }
