@@ -124,7 +124,6 @@ if(password.length < 6 || password.length > 20){
     //Mongoose validation error
     if (err.name === "ValidationError") {
 
-        // Get first validation message
         const firstError = Object.values(err.errors)[0].message;
 
         return res.status(400).json({
