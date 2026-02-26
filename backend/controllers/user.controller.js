@@ -54,8 +54,8 @@ export const register = async(req,res)=>{
     return res.status(400).json({message: "Username must be 3-20 characters"});
 }
 
-if(name.length < 2 || name.length > 30){
-    return res.status(400).json({message: "Name must be 2-30 characters"});
+if(name.length < 3 || name.length > 30){
+    return res.status(400).json({message: "Name must be 3-30 characters"});
 }
 
 if(email.length > 50){
